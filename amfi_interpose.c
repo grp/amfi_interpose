@@ -85,6 +85,7 @@ mach_port_t replaced_launch_data_get_machport(const launch_data_t t) {
 DYLD_INTERPOSE(replaced_launch_data_get_machport, launch_data_get_machport);
 
 __attribute__((constructor)) static void amfi_interpose_init() {
+    // this makes it tethered so you don't mess your device up
     unlink("/var/run/mobile_image_mounter/developer.dimage");
 
     syslog(LOG_EMERG, "hello there, amfi_interpose here");
