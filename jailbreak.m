@@ -136,8 +136,7 @@ int main(int argc, char **argv) {
     uicache();
     syslog(LOG_EMERG, "done");
 
-    run((char *[]) {"/usr/bin/dpkg", "-i", "/Developer/resign.deb", NULL}, NULL);
-    system("dpkg -i /Developer/resign.deb > /dpkg.txt");
+    system("killall SpringBoard");
 
     return 0;
 }
