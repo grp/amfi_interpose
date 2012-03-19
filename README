@@ -8,7 +8,7 @@ usage:
  - make sure your provisioning profile is installed
  - ./test.sh to build and go.
  - ./interact jailbreak to install cydia, etc
- - reboot if cydia doesn't show up.
+ - reboot. (thanks DHowett for pointing out this is necessary)
  - re-run ./test.sh on each boot to jailbreak again
 
 when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement.
