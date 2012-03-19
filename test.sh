@@ -17,6 +17,6 @@ sudo chown root:wheel ddi/usr/libexec/*
 rm ddi.dmg
 hdiutil create -format UDZO -layout NONE -srcfolder ddi ddi.dmg
 
-race 100000 DeveloperDiskImage.dmg{,.signature} ddi.dmg
+./race 100000 DeveloperDiskImage.dmg{,.signature} ddi.dmg
 
 
