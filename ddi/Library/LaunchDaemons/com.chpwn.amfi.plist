@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>DYLD_INSERT_LIBRARIES</key>
+		<string>/Developer/amfi_interpose.dylib</string>
+	</dict>
+	<key>Label</key>
+	<string>com.chpwn.amfi</string>
+	<!--<key>MachServices</key>
+	<dict>
+		<key>com.chpwn.amfi</key>
+		<dict>
+			<key>HostSpecialPort</key>
+			<integer>18</integer>
+		</dict>
+	</dict>-->
+	<key>POSIXSpawnType</key>
+	<string>Interactive</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/libexec/amfid</string>
+	</array>
+    <key>UserName</key>
+    <string>root</string>
+	<key>RunAtLoad</key>
+	<true/>
+    <key>KeepAlive</key>
+    <true/>
+</dict>
+</plist>
