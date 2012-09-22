@@ -14,9 +14,22 @@ sudo chown root:wheel ddi/Library/LaunchDaemons/*.plist
 sudo chmod +x ddi/usr/libexec/*
 sudo chown root:wheel ddi/usr/libexec/*
 
-rm ddi.dmg
-hdiutil create -format UDZO -layout NONE -srcfolder ddi ddi.dmg
+sudo rm ddi.dmg
+sudo hdiutil create -format UDZO -layout NONE -srcfolder ddi ddi.dmg
 
-./race 100000 DeveloperDiskImage.dmg{,.signature} ddi.dmg
+for ((x=299999; x!=1000000; x+=1))
+do
+  OUTPUT=$(./race $x DeveloperDiskImage.dmg{,.signature} ddi.dmg)
+  echo $OUTPUT
+
+  if [[ $OUTPUT =~ Complete ]]; then
+    echo "Success!"
+    echo $x
+    break
+  fi
+
+  echo $x 
+done
+#./race 300000 DeveloperDiskImage.dmg{,.signature} ddi.dmg
 
 

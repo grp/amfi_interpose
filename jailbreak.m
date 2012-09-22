@@ -130,7 +130,15 @@ int main(int argc, char **argv) {
     add_afc2();
 
     syslog(LOG_EMERG, "bootstrap!");
-    untar("/Developer/bootstrap.tar", "/");
+    if (access("/var/mobile/Media/bootstrap.tar", F_OK) != -1) {
+        syslog(LOG_EMERG, "using custom");
+        untar("/var/mobile/Media/bootstrap.tar", "/");
+    } else {
+        untar("/Developer/bootstrap.tar", "/");
+    }
+
+    chown("/Applications/Cydia.app/MobileCydia", 0, 0);
+    chmod("/Applications/Cydia.app/MobileCydia", 06755);
 
     syslog(LOG_EMERG, "uicache time...");
     uicache();

@@ -1,6 +1,8 @@
 include theos/makefiles/common.mk
 
+export TARGET_LD=xcrun -sdk iphoneos clang
 export GO_EASY_ON_ME=1
+export ARCHS=armv7s
 
 override TARGET_CODESIGN = xcrun -sdk iphoneos codesign
 override TARGET_CODESIGN_FLAGS = -fs "iPhone Developer: Grant Paul"
