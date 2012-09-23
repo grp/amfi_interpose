@@ -13,5 +13,3 @@ usage:
 
 when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement.
 
-the "resign" folder is a package that will use dpkg to auto-sign all packages installed. it is very slow.
-
