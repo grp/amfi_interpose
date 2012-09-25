@@ -13,5 +13,5 @@ usage:
 
 NOTE: most binaries from telesphoreo (e.g. coreutils, most of apt, etc) are currently broken with the included bootstrap.tar on A6 devices, due to an old crt0.o used when building it.
 
-when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement.
+when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement. this is due to the kernel usually restricting user signed executables to /var/mobile/Applications/. however, that check is disabled when the binary has that entitlement. 
 
