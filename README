@@ -11,5 +11,7 @@ usage:
  - reboot. (thanks DHowett for pointing out this is necessary)
  - re-run ./test.sh on each boot to jailbreak again
 
+NOTE: most binaries from telesphoreo (e.g. coreutils, most of apt, etc) are currently broken with the included bootstrap.tar on A6 devices, due to an old crt0.o used when building it.
+
 when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement.
 
