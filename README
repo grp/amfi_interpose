@@ -1,8 +1,8 @@
 see description.
 
 usage:
- - device must NOT have been used for development
- - need theos in ./theos
+ - device must NOT have been used for development (if it is, reboot while Xcode is not running)
+ - put a copy of theos in ./theos
  - update DeveloperDiskImage.{dmg,signature} for your firmware
  - change Makefile to use your dev profile
  - make sure your provisioning profile is installed
