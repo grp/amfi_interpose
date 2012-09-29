@@ -1,4 +1,4 @@
-see description.
+a portable, fully userland jailbreak.
 
 usage:
  - device must NOT have been used for development (if it is, reboot while Xcode is not running)
