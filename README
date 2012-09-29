@@ -5,6 +5,7 @@ usage:
  - put a copy of theos in ./theos
  - update DeveloperDiskImage.{dmg,signature} for your firmware
  - change Makefile to use your dev profile
+ - depending on the target device, change Makefile to build for the correct architecture
  - make sure your provisioning profile is installed
  - ./test.sh to build and go.
  - ./interact jailbreak to install cydia, etc
