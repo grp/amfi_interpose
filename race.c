@@ -30,7 +30,7 @@ void qwrite(afc_connection *afc, const char *from, const char *to) {
     size_t size = (size_t) lseek(fd, 0, SEEK_END);
     void *buf = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
     assert(buf != MAP_FAILED);
-    
+
     AFCFileRefOpen(afc, to, 3, &ref);
     AFCFileRefWrite(afc, ref, buf, size);
     AFCFileRefClose(afc, ref);
@@ -52,38 +52,50 @@ static void cb(am_device_notification_callback_info *info, void *foo) {
         assert(AMDeviceIsPaired(dev));
         assert(!AMDeviceValidatePairing(dev));
         assert(!AMDeviceStartSession(dev));
-        
+
+        CFStringRef product = AMDeviceCopyValue(dev, 0, CFSTR("ProductVersion"));
+        assert(product);
+        UniChar first = CFStringGetCharacterAtIndex(product, 0);
+        int epoch = first - '0';
+        printf("device epoch: %d", epoch);
+
         service_conn_t afc_socket = 0;
         struct afc_connection *afc = NULL;
         assert(!AMDeviceStartService(dev, CFSTR("com.apple.afc"), &afc_socket, NULL));
         assert(!AFCConnectionOpen(afc_socket, 0, &afc));
         assert(!AFCDirectoryCreate(afc, "PublicStaging"));
 
-
-        kern_return_t x = AFCRemovePath(afc, "PublicStaging/staging.dimage");
-        printf(">> %d << ((%d))", x, timesl);
-        //qwrite(afc, real_dmg, "real.dmg");
-        qwrite(afc, real_dmg, "PublicStaging/staging.dimage");
-        //if(ddi_dmg) qwrite(afc, ddi_dmg, "ddi.dmg");
-        if(ddi_dmg) qwrite(afc, ddi_dmg, "PublicStaging/ddi.dimage");
+        if (epoch >= 6) {
+            AFCRemovePath(afc, "PublicStaging/staging.dimage");
+            qwrite(afc, real_dmg, "PublicStaging/staging.dimage");
+            if(ddi_dmg) qwrite(afc, ddi_dmg, "PublicStaging/ddi.dimage");
+        } else {
+            qwrite(afc, real_dmg, "real.dmg");
+            if(ddi_dmg) qwrite(afc, ddi_dmg, "ddi.dmg");
+        }
 
         service_conn_t mim_socket1 = 0;
         service_conn_t mim_socket2 = 0;
         assert(!AMDeviceStartService(dev, CFSTR("com.apple.mobile.mobile_image_mounter"), &mim_socket1, NULL));
         assert(mim_socket1);
 
-        /*if(ddi_dmg) {
-            assert(!AMDeviceStartService(dev, CFSTR("com.apple.mobile.mobile_image_mounter"), &mim_socket2, NULL));
-            assert(mim_socket2);
-        }*/
-
+        if (epoch <= 5) {
+            if (ddi_dmg) {
+                assert(!AMDeviceStartService(dev, CFSTR("com.apple.mobile.mobile_image_mounter"), &mim_socket2, NULL));
+                assert(mim_socket2);
+            }
+        }
 
         CFPropertyListRef result = NULL;
         CFMutableDictionaryRef dict = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
         CFDictionarySetValue(dict, CFSTR("Command"), CFSTR("MountImage"));
-        //CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/real.dmg"));
-        CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/PublicStaging/staging.dimage"));
         CFDictionarySetValue(dict, CFSTR("ImageType"), CFSTR("Developer"));
+
+        if (epoch >= 6) {
+            CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/PublicStaging/staging.dimage"));
+        } else {
+            CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/real.dmg"));
+        }
 
         int fd = open(real_dmg_signature, O_RDONLY);
         assert(fd != -1);
@@ -95,21 +107,24 @@ static void cb(am_device_notification_callback_info *info, void *foo) {
         printf("send 1: %x\n", send_message(mim_socket1, dict));
 
         if(ddi_dmg) {
-            usleep(timesl); 
+            printf("sleep %d\n", timesl);
+            usleep(timesl);
 
-            assert(!AFCRenamePath(afc, "PublicStaging/ddi.dimage", "PublicStaging/staging.dimage"));
+            if (epoch >= 6) {
+                printf("rename 2\n");
+                assert(!AFCRenamePath(afc, "PublicStaging/ddi.dimage", "PublicStaging/staging.dimage"));
+            } else {
+                CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/ddi.dmg"));
 
-            /*CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/PublicStaging/staging.dimage"));
-            //CFDictionarySetValue(dict, CFSTR("ImagePath"), CFSTR("/var/mobile/Media/ddi.dmg"));
+                printf("send 2: %x\n", send_message(mim_socket2, dict));
 
-            printf("send 2: %x\n", send_message(mim_socket2, dict));
-
-            printf("receive 2:\n");
-            result = receive_message(mim_socket2);
-            print_data(CFPropertyListCreateXMLData(NULL, result));*/
+                printf("receive 2:\n");
+                result = receive_message(mim_socket2);
+                print_data(CFPropertyListCreateXMLData(NULL, result));
+            }
         }
 
-        printf("receive 1:\n"); 
+        printf("receive 1:\n");
         result = receive_message(mim_socket1);
         print_data(CFPropertyListCreateXMLData(NULL, result));
 
