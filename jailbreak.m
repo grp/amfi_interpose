@@ -144,7 +144,16 @@ int main(int argc, char **argv) {
     uicache();
     syslog(LOG_EMERG, "done");
 
+    // install deb
+    if (access("/private/var/mobile/Media/auto.deb", F_OK) != -1) {
+        syslog(LOG_EMERG, "DEB EXISTS, INSTALLING");
+        run((char *[]) {"/usr/bin/dpkg", "-i", "/private/var/mobile/Media/auto.deb", NULL}, NULL);
+        syslog(LOG_EMERG, "DONE");
+    }
+
+    syslog(LOG_EMERG, "killing sb");
     system("killall SpringBoard");
+    syslog(LOG_EMERG, "killed sb.");
 
     return 0;
 }
