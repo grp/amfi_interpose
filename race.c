@@ -79,7 +79,9 @@ static void cb(am_device_notification_callback_info *info, void *foo) {
         assert(!AMDeviceStartService(dev, CFSTR("com.apple.mobile.mobile_image_mounter"), &mim_socket1, NULL));
         assert(mim_socket1);
 
-        if (epoch <= 5) {
+        if (epoch >= 6) {
+            // do nothing
+        } else {
             if (ddi_dmg) {
                 assert(!AMDeviceStartService(dev, CFSTR("com.apple.mobile.mobile_image_mounter"), &mim_socket2, NULL));
                 assert(mim_socket2);
