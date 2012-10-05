@@ -8,6 +8,10 @@ make
 cp obj/amfi_interpose.dylib ddi/
 cp obj/jailbreak ddi/
 
+pushd bs
+tar c . > ../ddi/bootstrap.tar
+popd
+
 sudo chmod 0644 ddi/Library/LaunchDaemons/*.plist
 sudo chown root:wheel ddi/Library/LaunchDaemons/*.plist
 

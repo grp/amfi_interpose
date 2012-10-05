@@ -1,0 +1,15 @@
+/.
+/usr
+/usr/bin
+/usr/bin/gpg
+/usr/bin/gpgsplit
+/usr/bin/gpg-zip
+/usr/bin/gpgv
+/usr/share
+/usr/share/gnupg
+/usr/share/gnupg/options.skel
+/usr/libexec
+/usr/libexec/gnupg
+/usr/libexec/gnupg/gpgkeys_hkp
+/usr/libexec/gnupg/gpgkeys_finger
+/usr/libexec/gnupg/gpgkeys_curl

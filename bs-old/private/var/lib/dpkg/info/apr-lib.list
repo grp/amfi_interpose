@@ -1,0 +1,10 @@
+/.
+/usr
+/usr/lib
+/usr/lib/pkgconfig
+/usr/lib/pkgconfig/apr-1.pc
+/usr/lib/libapr-1.dylib
+/usr/lib/libapr-1.la
+/usr/lib/libapr-1.0.dylib
+/usr/lib/libapr-1.0.3.3.dylib
+/usr/lib/apr.exp

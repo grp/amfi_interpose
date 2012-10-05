@@ -1,0 +1,16 @@
+/.
+/bin
+/bin/zdiff
+/bin/zgrep
+/bin/zcmp
+/bin/zcat
+/bin/gzip
+/bin/zforce
+/bin/zfgrep
+/bin/zegrep
+/bin/gunzip
+/bin/uncompress
+/bin/zmore
+/bin/gzexe
+/bin/zless
+/bin/znew

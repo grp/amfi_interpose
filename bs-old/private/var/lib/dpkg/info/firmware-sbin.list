@@ -1,0 +1,12 @@
+/.
+/usr
+/usr/sbin
+/usr/sbin/nvram
+/sbin
+/sbin/fstyp_hfs
+/sbin/fsck
+/sbin/newfs_hfs
+/sbin/mount_hfs
+/sbin/mount
+/sbin/fstyp
+/sbin/fsck_hfs
