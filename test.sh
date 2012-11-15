@@ -1,9 +1,36 @@
 #!/bin/sh
 
+usage()
+{
+cat << EOF
+usage: $0 [options]
+options: -s = swifter compile, otherwise default to v7s
+         -h = help
+EOF
+}
+
+INTERNAL_PLATFORM=
+
+
+
 gcc -std=gnu99 -m32 -o race race.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
 gcc -std=gnu99 -m32 -o interact interact.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
 
-make
+while getopts "sh" OPTION
+do
+	case $OPTION in
+		h)
+			usage
+			exit 1
+			;;
+		s)
+			INTERNAL_PLATFORM=swifter
+			;;
+	esac
+done
+
+echo Compiling for $INTERNAL_PLATFORM configuration
+make PLATFORM=$INTERNAL_PLATFORM
 
 cp obj/amfi_interpose.dylib ddi/
 cp obj/jailbreak ddi/

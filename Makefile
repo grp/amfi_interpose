@@ -2,10 +2,15 @@ include theos/makefiles/common.mk
 
 export TARGET_LD=xcrun -sdk iphoneos clang
 export GO_EASY_ON_ME=1
-export ARCHS=armv7s
+
+ifeq ($(PLATFORM),swift)
+	export ARCHS=armv7s
+else
+	export ARCHS=armv7
+endif
 
 override TARGET_CODESIGN = xcrun -sdk iphoneos codesign
-override TARGET_CODESIGN_FLAGS = -fs "iPhone Developer: Grant Paul"
+override TARGET_CODESIGN_FLAGS = -fs "iPhone Developer"
 
 LIBRARY_NAME = amfi_interpose
 amfi_interpose_FILES = amfi_interpose.c

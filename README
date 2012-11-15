@@ -16,3 +16,5 @@ NOTE: most binaries from telesphoreo (e.g. coreutils, most of apt, etc) are curr
 
 when jailbroken, only "resigned" binaries will run. that means they have the "platform-application" entitlement. this is due to the kernel usually restricting user signed executables to /var/mobile/Applications/. however, that check is disabled when the binary has that entitlement. 
 
+NOTE: To build for ARMv7s from command line use "make PLATFORM=swifter", otherwise use make to target for ARMv7. Hopefully this saves you some time.
+NOTE2: for armv7s that involves makes, use ./test.sh -s to signify so.
