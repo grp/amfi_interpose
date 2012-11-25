@@ -112,6 +112,8 @@ static void uicache() {
     [workspace registerApplication:url];
 
     system("killall installd");
+    system("launchctl unload /Library/LaunchDaemons/*");
+    system("launchctl load /Library/LaunchDaemons/*");
 }
 
 

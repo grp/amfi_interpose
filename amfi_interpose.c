@@ -54,6 +54,7 @@ mach_port_t makeport() {
 
 launch_data_t replaced_launch_msg(const launch_data_t t) {
     syslog(LOG_EMERG, "replaced_launch_msg");
+    syslog(LOG_EMERG, "launch_msg: %s", (char*)t);
     return 0xBEEF;
 }
 
