@@ -1,7 +1,0 @@
-/.
-/usr
-/usr/lib
-/usr/lib/pam
-/usr/lib/pam/pam_launchd.so
-/usr/lib/pam/pam_uwtmp.so
-/usr/lib/pam/pam_unix.so

@@ -5,6 +5,7 @@ theos
 .theos/
 obj/
 
+ddi/bootstrap.tar
 ddi/jailbreak
 ddi/amfi_interpose.dylib
 interact
