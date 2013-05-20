@@ -13,8 +13,8 @@ INTERNAL_PLATFORM=
 
 
 
-gcc -std=gnu99 -m32 -o race race.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
-gcc -std=gnu99 -m32 -o interact interact.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
+gcc -std=gnu99 -m64 -o race race.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
+gcc -std=gnu99 -m64 -o interact interact.c -I. -F/System/Library/PrivateFrameworks -framework MobileDevice -framework CoreFoundation -Wall
 
 while getopts "sh" OPTION
 do

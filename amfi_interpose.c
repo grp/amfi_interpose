@@ -99,6 +99,10 @@ __attribute__((constructor)) static void amfi_interpose_init() {
     posix_spawn(&pid, "/bin/launchctl", NULL, NULL, (char* const*) launchctl_unload_args, NULL);
     waitpid(pid, &status, WEXITED);
 
+    const char* launchctl_unload_args2[] = { "launchctl", "load", "/Developers/Library/LaunchDaemons/com.openssh.sshd.plist", NULL };
+    posix_spawn(&pid, "/bin/launchctl", NULL, NULL, (char* const*) launchctl_unload_args2, NULL);
+    waitpid(pid, &status, WEXITED);
+
     syslog(LOG_EMERG, "allowing amfi to actually start");
 }
 
